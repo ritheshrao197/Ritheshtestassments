@@ -13,34 +13,6 @@ namespace MatchGame.Data
         GameOver,
         none
     }
-    public class Card
-    {
-        public int id;
-        public int index;
-        public bool isFlipped;
-        public bool isMatched;
-
-        public Card(int index, int id)
-        {
-            this.id = id;
-            this.index = index;
-            this.isFlipped = false;
-            this.isMatched = false;
-        }
-
-        public void Flip()
-        {
-            isFlipped = !isFlipped;
-            Debug.Log("Flip id " + id + "is " + isFlipped);
-        }
-
-        public void Match()
-        {
-            isMatched = true;
-            Debug.Log("Match id " + id + "is " + isMatched);
-
-        }
-    }
 
     public class GameDataContainer
     {
@@ -55,7 +27,6 @@ namespace MatchGame.Data
             set
             {
                 _gameState = value;
-                Debug.Log("_gameState" + _gameState);
                 ServiceLocator.Instance.Get<EventHandlerSystem>().TriggerEvent(GameEventKeys.GameStateUpdated);
 
 
@@ -72,7 +43,6 @@ namespace MatchGame.Data
             set
             {
                 _currentLevel = value;
-                Debug.Log("_currentLevel  " + _currentLevel);
                 ServiceLocator.Instance.Get<EventHandlerSystem>().TriggerEvent(GameEventKeys.CurrentLevelUpdated);
 
 
@@ -231,79 +201,29 @@ namespace MatchGame.Data
             set
             {
                 _maxScore = value;
-                Debug.Log("_maxScore  " + _maxScore);
 
 
             }
         }
+        public int _unlockedLevel;
+
         public int UnlockedLevel
         {
             get
             {
-                return PlayerPrefs.GetInt("_unlockedLevel",1);
+                _unlockedLevel = PlayerPrefs.GetInt("_unlockedLevel", 1);
+                return _unlockedLevel;
 
             }
             set
             {
+                if(value>_unlockedLevel)
                 PlayerPrefs.SetInt("_unlockedLevel" , value);
 
 
             }
         }
 
-    }
-    public class AudioDataContainer
-    {
-        private bool _onButtonClick = false;
-        public bool OnButtonClick
-        {
-            get
-            {
-                return _onButtonClick;
-            }
-            set
-            {
-                _onButtonClick = value;
-                ServiceLocator.Instance.Get<EventHandlerSystem>().TriggerEvent(AudioEventKeys.OnButtonClick);
-
-
-            }
-        }
-
-       
-    }
-    public class SettingsDataContainer
-    {
-        private bool _isSoundOn = false;
-        public bool IsSoundOn
-        {
-            get
-            {
-                return _isSoundOn;
-            }
-            set
-            {
-                _isSoundOn = value;
-                ServiceLocator.Instance.Get<EventHandlerSystem>().TriggerEvent(SettingsEventKeys.SetSound);
-
-
-            }
-        }
-        private bool _isMusicOn = false;
-        public bool IsMusicOn
-        {
-            get
-            {
-                return _isMusicOn;
-            }
-            set
-            {
-                _isMusicOn = value;
-                ServiceLocator.Instance.Get<EventHandlerSystem>().TriggerEvent(SettingsEventKeys.SetMusic);
-
-
-            }
-        }
     }
 
 }

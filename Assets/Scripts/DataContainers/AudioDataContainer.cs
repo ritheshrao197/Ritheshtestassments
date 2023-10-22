@@ -2,10 +2,17 @@
 
 namespace MatchGame.Data
 {
+    public enum SFX
+    {
+        ButtonClick,
+        WrongMatch,
+        CorrectMatch,
+        LevelComplete
+    }
     public class AudioDataContainer
     {
-        private bool _onButtonClick = false;
-        public bool OnButtonClick
+        private SFX _onButtonClick;
+        public SFX OnButtonClick
         {
             get
             {
