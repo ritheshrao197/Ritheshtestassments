@@ -41,13 +41,13 @@ namespace MatchGame
         public void GetGridSize()
         {
             _gameDataContainer.GridSize = Constants.gridSizes[_gameDataContainer.CurrentLevel];
-            Debug.Log("GridSize "+ _gameDataContainer.GridSize.rows+"-"+_gameDataContainer.GridSize.columns);
+            //Debug.Log("GridSize "+ _gameDataContainer.GridSize.rows+"-"+_gameDataContainer.GridSize.columns);
 
 
         }
         public void GetIndexNumbers()
         {
-            Debug.Log("Index Numbers");
+            //Debug.Log("Index Numbers");
 
             _gameDataContainer.IndexNumbers = GenerateRandomNumbers((_gameDataContainer.GridSize.rows * _gameDataContainer.GridSize.columns) / 2);
             //foreach(int i in _gameDataContainer.IndexNumbers)
