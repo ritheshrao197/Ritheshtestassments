@@ -34,10 +34,22 @@ namespace MatchGame
 
         public void Start()
         {
-            isRunning = true;
-            _gameDataContainer.CurrentTime = startTime;
+            if (_gameDataContainer.GameState == State.Play)
+            {
 
-            CoreContext.Instance.StartCoroutine(Countdown());
+
+                isRunning = true;
+                _gameDataContainer.CurrentTime = startTime;
+
+                CoreContext.Instance.StartCoroutine(Countdown());
+            }
+            else if (_gameDataContainer.GameState == State.Pause)
+
+            {
+                isRunning = false;
+
+            }
+
 
         }
 

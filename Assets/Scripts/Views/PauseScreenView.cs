@@ -1,16 +1,14 @@
-﻿
-using System;
+﻿using System;
 using MatchGame.Core;
 using MatchGame.Data;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace MatchGame.View
 {
-    public class MainMenuView : View
+    public class PauseScreenView : View
     {
-        [SerializeField] private Button _play;
+        [SerializeField] private Button _resume;
         [SerializeField] private Button _quit;
         GameDataContainer _gameDataContainer;
         public CanvasGroup _screen;
@@ -18,35 +16,28 @@ namespace MatchGame.View
         public override void Init()
         {
             base.Init();
-            //_play.GetComponent<Button>();
             _screen = GetComponent<CanvasGroup>();  // Get the CanvasGroup component from the GameObject.
 
             _gameDataContainer = ServiceLocator.Instance.Get<GameDataContainer>();
 
-            _play.onClick.AddListener(()=>OnPlayButtonClick());
             eventHandlerSystem.AddListener(GameEventKeys.GameStateUpdated, ShowMenu);
+            _resume.onClick.AddListener(() => Resume());
         }
 
-        private void OnPlayButtonClick()
+        private void Resume()
         {
-
-            _gameDataContainer.GameState = State.LevelSelection;
+            _gameDataContainer.GameState = State.Play;
         }
-        public override void Finalise()
-        {
-            base.Finalise();
-            _play.onClick.RemoveAllListeners();
-            eventHandlerSystem.RemoveListener(GameEventKeys.GameStateUpdated, ShowMenu);
 
-        }
+       
 
         private void ShowMenu()
         {
-           if( _gameDataContainer.GameState == State.MainMenu)
+            if (_gameDataContainer.GameState == State.Pause)
             {
                 EnableScreen();
             }
-            else 
+            else
 
             {
                 DisableScreen();

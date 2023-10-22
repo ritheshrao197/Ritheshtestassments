@@ -5,12 +5,14 @@ using MatchGame.Data;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-
+using TMPro;
 namespace MatchGame.View
 {
     public class GamePlayView : View
     {
-     [SerializeField]   private Button _pause;
+        [SerializeField] private Button _pause;
+        [SerializeField] private TextMeshProUGUI _score;
+        [SerializeField] private TextMeshProUGUI _time;
         GameDataContainer _gameDataContainer;
         public CanvasGroup _screen;
 
@@ -23,6 +25,8 @@ namespace MatchGame.View
 
             _pause.onClick.AddListener(() => OnPause());
             eventHandlerSystem.AddListener(GameEventKeys.GameStateUpdated, ShowGamePlay);
+            eventHandlerSystem.AddListener(GameEventKeys.ScoreUpdated, ScoreUpdated);
+            eventHandlerSystem.AddListener(GameEventKeys.TimerUpdated, TimerUpdated);
         }
 
         private void OnPause()
@@ -35,17 +39,28 @@ namespace MatchGame.View
             base.Finalise();
             _pause.onClick.RemoveAllListeners();
             eventHandlerSystem.RemoveListener(GameEventKeys.GameStateUpdated, ShowGamePlay);
+            eventHandlerSystem.RemoveListener(GameEventKeys.ScoreUpdated, ScoreUpdated);
+            eventHandlerSystem.RemoveListener(GameEventKeys.TimerUpdated, TimerUpdated);
 
+        }
+
+        private void TimerUpdated()
+        {
+            _time.text = "Time :" + _gameDataContainer.CurrentTime.ToString("F0"); ;
+        }
+
+        private void ScoreUpdated()
+        {
+             _score.text = "Score :"+_gameDataContainer.Score;
         }
 
         private void ShowGamePlay()
         {
-            if (_gameDataContainer.GameState == State.Play)
+            if (_gameDataContainer.GameState == State.Play )
             {
                 EnableScreen ();
             }
-            else if (_gameDataContainer.GameState == State.MainMenu)
-
+            else if (_gameDataContainer.GameState != State.Pause)
             {
                 DisableScreen();
             }

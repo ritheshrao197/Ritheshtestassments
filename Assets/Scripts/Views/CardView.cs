@@ -9,7 +9,10 @@ using System;
 
 namespace MatchGame.View
 {
+    using UnityEngine;
+    using UnityEngine.UI;
 
+   
     public class CardView : View
     {
         [SerializeField] private Sprite _firstMaterial;
@@ -86,6 +89,7 @@ namespace MatchGame.View
         public Card GetIndex() { return cardData; }
         public void ApplyFirstMaterial()
         {
+            FlipImageHorizontally();
             if (_gameDataContainer.FlipCards.id == cardData.id &&
                 _gameDataContainer.FlipCards.index == cardData.index)
             {
@@ -101,198 +105,12 @@ namespace MatchGame.View
 
         public void ApplySecondMaterial()
         {
+            FlipImageHorizontally();
             _cardBack.sprite = _secondMaterial;
             _cardImage.gameObject.SetActive(true);
 
         }
 
-        //private void OnEnable()
-        //{
-        //    //Init();
-        //}
-        //public override void Init()
-        //{
-        //    base.Init();
-        //    _clicked = false;
-        //    _currentRotation = gameObject.transform.rotation;
-
-        //    _gameDataContainer  = ServiceLocator.Instance.Get<GameDataContainer>();
-        //    _cardBack = GetComponent<Image>();
-        //    // Get a reference to the Button component.
-        //    button = GetComponent<Button>();
-        //    _indexTxt = GetComponentInChildren<TextMeshProUGUI>();
-        //    // Attach the OnClick event handler to the button.
-        //    //button.onClick.AddListener(OnCardClick);
-        //    //eventHandlerSystem.AddListener(GameEventKeys.FlipCards, FlipBack);
-        //    //eventHandlerSystem.AddListener(GameEventKeys.CardMatched, OnCardMatched);
-        //}
-
-        //public override void Finalise()
-        //{
-        //    base.Finalise();
-        //    //eventHandlerSystem.RemoveListener(GameEventKeys.FlipCards, FlipBack);
-        //    //eventHandlerSystem.RemoveListener(GameEventKeys.CardMatched, OnCardMatched);
-
-
-        //    button.onClick.RemoveAllListeners();
-        //}
-
-        //private void OnCardMatched()
-        //{
-        //   if(_gameDataContainer.DisplayedCard.id==_card.id)
-        //    {
-        //        Debug.Log("OnCardMatched " + _card.id + "  " + _card.index);
-        //        _cardBack.color = Color.blue;
-        //        //_cardImage.gameObject.SetActive(false);
-        //        _matched = true;
-        //        //Deactivate();
-        //    }
-        //}
-
-        //private void Start()
-        //{
-
-        //}
-
-
-        //private void OnCardClick()
-        //{
-        //    if (!_card.isFlipped && !_card.isMatched)
-        //    {
-        //        _card.Flip();
-        //        // Flip the card's visual representation (e.g., show the card face)
-        //        // You'll need to implement the UI and card flipping animations in Unity.
-
-        //        //cardManager.CheckForMatch(cardData);
-        //        _gameDataContainer.DisplayedCard = _card;
-
-        //    }//if (!_clicked)
-        //    //{
-        //    //    //_pictureManager.CurrentPuzzleState = PictureManager.PuzzleState.PuzzleRotating;
-
-        //    //    //if (!GameSettings.Instance.IsSoundEffectMutedPermanently())
-        //    //    //_audio.Play();
-        //    //    StartCoroutine(Rotate(45, false));
-        //    //    _clicked = true;
-        //    //}
-        //    ////else
-        //    ////{
-        //    ////    FlipBack();
-        //    ////    _clicked = false;
-
-        //    ////}
-        //}
-
-        //public void FlipBack()
-        //{
-        //    //if (_clicked)
-        //    {
-        //        //_pictureManager.CurrentPuzzleState = PictureManager.PuzzleState.PuzzleRotating;
-        //        _clicked = false;
-        //        _revealed = false;
-        //        //if (!GameSettings.Instance.IsSoundEffectMutedPermanently())
-        //        //_audio.Play();
-        //        if (!_matched)
-        //            StartCoroutine(Rotate(45, true));
-        //            //_clicked = false;
-
-        //    }
-        //}
-
-        //private IEnumerator Rotate(float angle, bool FirstMat)
-        //{
-        //    if (!FirstMat)
-        //    {
-        //        if (!_revealed)
-        //        {
-        //            _revealed = true;
-        //            _gameDataContainer.DisplayedCard = _card;
-
-        //        }
-        //        ApplySecondMaterial();
-        //        //_pictureManager.CheckPicture();
-        //    }
-        //    else
-        //    {
-        //        ApplyFirstMaterial();  //_pictureManager.CurrentPuzzleState = PictureManager.PuzzleState.CanRotate;
-        //        //_pictureManager.PuzzleRevealedNumber = PictureManager.RevealedState.NoRevealed;
-        //    }
-        //    yield return null;
-
-        //    //float rot = 0f;
-        //    //const float dir = 1f;
-        //    //const float rotSpeed = 180;
-        //    ////const float rotSpeed1 = 45;
-        //    //bool assigned = false;
-        //    //float startAngle = angle;
-
-        //    ////if (FirstMat)
-        //    ////{
-        //    //while (rot < angle)
-        //    //{
-        //    //    float step = Time.deltaTime * rotSpeed;
-        //    //    gameObject.GetComponent<Transform>().Rotate(new Vector3(0, 2, 0) * step * dir);
-        //    //    if (rot >= (startAngle - 2) && !assigned)
-        //    //    {
-        //    //        ApplyFirstMaterial();
-        //    //        assigned = true;
-        //    //    }
-        //    //    rot += (1 * step * dir);
-        //    //    yield return null;
-        //    //}
-        //    //}
-        //    //else
-        //    //{
-
-        //    //    while (angle > 0)
-        //    //    {
-        //    //        float step = Time.deltaTime * rotSpeed;
-        //    //        gameObject.GetComponent<Transform>().Rotate(new Vector3(0, 2, 0) * step * dir);
-        //    //        angle -= (1 * step * dir);
-        //    //        yield return null;
-        //    //    }
-        //    //}
-
-
-        //    //if (!FirstMat)
-        //    //{
-        //    //    if (!_revealed)
-        //    //    {
-        //    //        _revealed = true;
-        //    //    }
-        //    //    ApplySecondMaterial();
-        //    //    //_pictureManager.CheckPicture();
-        //    //}
-        //    //else
-        //    //{
-        //    //    ApplyFirstMaterial();  //_pictureManager.CurrentPuzzleState = PictureManager.PuzzleState.CanRotate;
-        //    //    //_pictureManager.PuzzleRevealedNumber = PictureManager.RevealedState.NoRevealed;
-        //    //}
-        //    gameObject.GetComponent<Transform>().rotation = _currentRotation;
-
-        //    ////_clicked = false;
-        //}
-
-        ////public void SetFirstMaterial(Material mat, string texturePath)
-        ////{
-        ////    _firstMaterial = mat;
-        ////    //_firstMaterial.mainTexture = Resources.Load(texturePath, typeof(Texture2D)) as Texture2D;
-        ////}
-
-        ////public void SetSecondMaterial(Material mat, string texturePath)
-        ////{
-        ////    _secondMaterial = mat;
-        ////    _secondMaterial.mainTexture = Resources.Load(texturePath, typeof(Texture2D)) as Texture2D;
-        ////}
-        //public void SetCardImage(Sprite sprite)
-        //{
-        //    _cardImage.sprite = sprite;
-        //}
-
-        //public void Deactivate()
-        //{
-        //    StartCoroutine(DeactivateCoroutine());
-        //}
         private Color initialColor;
         private Color targetColor = new Color(0f, 0f, 0f, 0f); // Target color with alpha set to 0.
 
@@ -312,6 +130,42 @@ namespace MatchGame.View
             _cardBack.color = targetColor;
             //yield return new WaitForSeconds(1f);
             //gameObject.SetActive(false);
+        }
+        private void FlipImageHorizontally()
+        {
+            // Get the current local scale
+            Vector3 currentScale = _cardImage.transform.localScale;
+
+            // Define the target scale for the flip
+            Vector3 targetScale = currentScale;
+            targetScale.x *= -1;
+
+            // Duration of the flip animation
+            float duration = 0.20f; // Adjust this to control the speed of the flip
+
+            // Use a Coroutine to animate the flip over time
+            StartCoroutine(AnimateFlip(currentScale, targetScale, duration));
+        }
+        private IEnumerator AnimateFlip(Vector3 startScale, Vector3 targetScale, float duration)
+        {
+            float startTime = Time.time;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                // Calculate the interpolation factor
+                float t = elapsedTime / duration;
+
+                // Lerp between startScale and targetScale
+                _cardImage. transform.localScale = Vector3.Lerp(startScale, targetScale, t);
+
+                elapsedTime = Time.time - startTime;
+
+                yield return null;
+            }
+
+            // Ensure the final scale is exactly the target scale
+            _cardImage. transform.localScale = targetScale;
         }
     }
 }

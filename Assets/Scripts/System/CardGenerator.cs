@@ -40,7 +40,7 @@ namespace MatchGame
         }
         public void GetGridSize()
         {
-            _gameDataContainer.GridSize = Constants.gridSizes[_gameDataContainer.CurrentLevel];
+            _gameDataContainer.GridSize = Constants.GridSizes[_gameDataContainer.CurrentLevel];
             //Debug.Log("GridSize "+ _gameDataContainer.GridSize.rows+"-"+_gameDataContainer.GridSize.columns);
 
 

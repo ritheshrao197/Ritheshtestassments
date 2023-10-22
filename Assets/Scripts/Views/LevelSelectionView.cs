@@ -1,17 +1,14 @@
-﻿
-using System;
-using MatchGame.Core;
+﻿using MatchGame.Core;
 using MatchGame.Data;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace MatchGame.View
 {
-    public class MainMenuView : View
+    public class LevelSelectionView : View
     {
-        [SerializeField] private Button _play;
-        [SerializeField] private Button _quit;
+        [SerializeField] private GameObject _levelPrefab;
+        [SerializeField] private GameObject _levelParent;
         GameDataContainer _gameDataContainer;
         public CanvasGroup _screen;
 
@@ -23,37 +20,43 @@ namespace MatchGame.View
 
             _gameDataContainer = ServiceLocator.Instance.Get<GameDataContainer>();
 
-            _play.onClick.AddListener(()=>OnPlayButtonClick());
+            //_play.onClick.AddListener(() => OnPlayButtonClick()); 
             eventHandlerSystem.AddListener(GameEventKeys.GameStateUpdated, ShowMenu);
         }
 
-        private void OnPlayButtonClick()
-        {
-
-            _gameDataContainer.GameState = State.LevelSelection;
-        }
         public override void Finalise()
         {
             base.Finalise();
-            _play.onClick.RemoveAllListeners();
             eventHandlerSystem.RemoveListener(GameEventKeys.GameStateUpdated, ShowMenu);
 
         }
 
         private void ShowMenu()
         {
-           if( _gameDataContainer.GameState == State.MainMenu)
+            if (_gameDataContainer.GameState == State.LevelSelection || _gameDataContainer.GameState == State.GameOver)
             {
-                EnableScreen();
+                GenerateLevels();
+                EnableScreen(); 
             }
             else 
 
             {
                 DisableScreen();
-
             }
         }
+        public void GenerateLevels()
+        {
 
+           
+            DeleteChildren(_levelParent.transform);
+            for (int i = 0; i < Constants.GridSizes.Count; i++)
+            {
+                // Create an instance of the prefab at a random position.
+                GameObject cardObject = Instantiate(_levelPrefab, _levelParent.transform);
+                LevelView level = cardObject.GetComponent<LevelView>();
+                level.SetLevelButton(i+1);
+            }
+        }
         /// <summary>
         /// Enable the screen by making it interactable and visible.
         /// </summary>
@@ -73,6 +76,19 @@ namespace MatchGame.View
             _screen.interactable = false;
             _screen.blocksRaycasts = false;
             _screen.alpha = 0;
+        }
+        public void DeleteChildren(Transform parentTransform)
+        {
+            if (parentTransform != null)
+            {
+                // Iterate through each child and destroy it.
+                for (int i = parentTransform.childCount - 1; i >= 0; i--)
+                {
+                    Transform child = parentTransform.GetChild(i);
+                    Destroy(child.gameObject);
+                }
+            }
+
         }
     }
 }

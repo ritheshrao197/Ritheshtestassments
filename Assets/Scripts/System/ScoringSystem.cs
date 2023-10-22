@@ -24,6 +24,8 @@ namespace MatchGame
             base.AddListener();
             _eventHandlerSystem.AddListener(GameEventKeys.GameStateUpdated, UpdateGameState);
             _eventHandlerSystem.AddListener(GameEventKeys.CardMatched, UpdateScore);
+            _eventHandlerSystem.AddListener(GameEventKeys.GridSizeUpdated, SetMaxScoreForLevel);
+
 
         }
 
@@ -32,8 +34,15 @@ namespace MatchGame
             base.RemoveListener();
             _eventHandlerSystem.RemoveListener(GameEventKeys.CardMatched, UpdateScore);
             _eventHandlerSystem.RemoveListener(GameEventKeys.GameStateUpdated, UpdateGameState);
+            _eventHandlerSystem.RemoveListener(GameEventKeys.GridSizeUpdated, SetMaxScoreForLevel);
 
 
+
+        }
+
+        private void SetMaxScoreForLevel()
+        {
+            _gameDataContainer.MaxScore = (_gameDataContainer.GridSize.columns * _gameDataContainer.GridSize.rows) / 2;
         }
 
         private void UpdateGameState()
@@ -45,6 +54,7 @@ namespace MatchGame
             else if (_gameDataContainer.GameState == State.GameOver)
             {
                 _timerSystem.Stop();
+                _gameDataContainer.Score = 0;
             }
         }
 
@@ -58,6 +68,11 @@ namespace MatchGame
         public void UpdateScore()
         {
             _gameDataContainer.Score += 1;
+            if(_gameDataContainer.MaxScore == _gameDataContainer.Score)
+            {
+                _gameDataContainer.GameState = State.GameOver;
+                _gameDataContainer.UnlockedLevel = _gameDataContainer.CurrentLevel+1;
+            }
         }
 
         public void SubtractPoints(int points)
