@@ -281,9 +281,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300056, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 00838296fb75a466d85889fa95dda53c, type: 3}
   m_Type: 1
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac3f745a4fe374b108ff8a6a26a5ccfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firstMaterial: {fileID: 21300056, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  _firstMaterial: {fileID: 21300000, guid: c5005993f9be6418abe23431eda7cd7a, type: 3}
   _secondMaterial: {fileID: 21300000, guid: 00838296fb75a466d85889fa95dda53c, type: 3}
   _cardImage: {fileID: 6737330846501835939}
   _cardBack: {fileID: 6737330847195181863}
