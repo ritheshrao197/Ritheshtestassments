@@ -31,7 +31,7 @@ namespace MatchGame.View
 
         private void OnPause()
         {
-
+            ServiceLocator.Instance.Get<AudioDataContainer>().OnButtonClick = SFX.ButtonClick;
             _gameDataContainer.GameState = State.Pause;
         }
         public override void Finalise()

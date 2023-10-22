@@ -4,7 +4,7 @@ namespace MatchGame.Data
 {
     public class SettingsDataContainer
     {
-        private bool _isSoundOn = false;
+        private bool _isSoundOn = true;
         public bool IsSoundOn
         {
             get
@@ -19,7 +19,7 @@ namespace MatchGame.Data
 
             }
         }
-        private bool _isMusicOn = false;
+        private bool _isMusicOn = true;
         public bool IsMusicOn
         {
             get

@@ -1,4 +1,5 @@
-﻿using MatchGame.Core;
+﻿using System;
+using MatchGame.Core;
 using MatchGame.Data;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,29 +12,36 @@ namespace MatchGame.View
         [SerializeField] private GameObject _levelParent;
         GameDataContainer _gameDataContainer;
         public CanvasGroup _screen;
+        public Button _backButton;
 
         public override void Init()
         {
             base.Init();
-            //_play.GetComponent<Button>();
             _screen = GetComponent<CanvasGroup>();  // Get the CanvasGroup component from the GameObject.
 
             _gameDataContainer = ServiceLocator.Instance.Get<GameDataContainer>();
 
-            //_play.onClick.AddListener(() => OnPlayButtonClick()); 
+            _backButton.onClick.AddListener(() => BackButton()); 
             eventHandlerSystem.AddListener(GameEventKeys.GameStateUpdated, ShowMenu);
         }
 
+      
         public override void Finalise()
         {
             base.Finalise();
             eventHandlerSystem.RemoveListener(GameEventKeys.GameStateUpdated, ShowMenu);
 
         }
+        private void BackButton()
+        {
+            ServiceLocator.Instance.Get<AudioDataContainer>().OnButtonClick = SFX.ButtonClick;
+            _gameDataContainer.GameState = State.MainMenu;
+        }
+
 
         private void ShowMenu()
         {
-            if (_gameDataContainer.GameState == State.LevelSelection || _gameDataContainer.GameState == State.GameOver)
+            if (_gameDataContainer.GameState == State.LevelSelection )
             {
                 GenerateLevels();
                 EnableScreen(); 

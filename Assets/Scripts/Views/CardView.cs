@@ -12,7 +12,7 @@ namespace MatchGame.View
     using UnityEngine;
     using UnityEngine.UI;
 
-   
+
     public class CardView : View
     {
         [SerializeField] private Sprite _firstMaterial;
@@ -30,15 +30,19 @@ namespace MatchGame.View
         private CardMatchSystem _cardManager;
 
         private GameDataContainer _gameDataContainer;
+        private AudioDataContainer _audioDataContainer;
+        private bool coroutineAllowed, facedUp;
 
 
-        public void SetIndex(int index, int id) {
+        public void SetIndex(int index, int id)
+        {
             base.Init();
             cardData = new Card(index, id);
             cardID = id;
             cardIndex = index;
-                _indexTxt.text =""+ id;
+            _indexTxt.text = "" + id;
             _gameDataContainer = ServiceLocator.Instance.Get<GameDataContainer>();
+            _audioDataContainer = ServiceLocator.Instance.Get<AudioDataContainer>();
             _cardManager = ServiceLocator.Instance.Get<CardMatchSystem>();
             {
                 _cardImage.sprite = _gameDataContainer.Sprites[id];
@@ -47,7 +51,7 @@ namespace MatchGame.View
             //{
 
             //}
-          
+
             button = GetComponent<Button>();
             // Attach the OnClick event handler to the button.
             button.onClick.AddListener(OnCardClick);
@@ -71,6 +75,8 @@ namespace MatchGame.View
             if (cardData.isMatched)
             {
                 StartCoroutine(DeactivateCoroutine());
+                _audioDataContainer.OnButtonClick = SFX.CorrectMatch;
+
             }
         }
 
@@ -84,12 +90,12 @@ namespace MatchGame.View
                 // You'll need to implement the UI and card flipping animations in Unity.
 
                 _cardManager.CheckForMatch(cardData);
+                _audioDataContainer.OnButtonClick = SFX.ButtonClick;
             }
         }
         public Card GetIndex() { return cardData; }
         public void ApplyFirstMaterial()
         {
-            FlipImageHorizontally();
             if (_gameDataContainer.FlipCards.id == cardData.id &&
                 _gameDataContainer.FlipCards.index == cardData.index)
             {
@@ -98,14 +104,17 @@ namespace MatchGame.View
                 _cardBack.sprite = _firstMaterial;
 
                 _cardImage.gameObject.SetActive(false);
+                CoreContext.Instance.StartCoroutine(FaceDown());
+
             }
-          
+
 
         }
 
         public void ApplySecondMaterial()
         {
-            FlipImageHorizontally();
+            CoreContext.Instance.StartCoroutine(FaceUp());
+
             _cardBack.sprite = _secondMaterial;
             _cardImage.gameObject.SetActive(true);
 
@@ -122,50 +131,56 @@ namespace MatchGame.View
             while (elapsedTime < 1)
             {
                 _cardBack.color = Color.Lerp(initialColor, targetColor, elapsedTime / 1);
+                _cardImage.color = Color.Lerp(initialColor, targetColor, elapsedTime / 1);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
             _cardImage.gameObject.SetActive(false);
 
             _cardBack.color = targetColor;
+            _cardImage.color = targetColor;
             //yield return new WaitForSeconds(1f);
             //gameObject.SetActive(false);
         }
-        private void FlipImageHorizontally()
+        private IEnumerator FaceUp()
         {
-            // Get the current local scale
-            Vector3 currentScale = _cardImage.transform.localScale;
+            coroutineAllowed = false;
 
-            // Define the target scale for the flip
-            Vector3 targetScale = currentScale;
-            targetScale.x *= -1;
-
-            // Duration of the flip animation
-            float duration = 0.20f; // Adjust this to control the speed of the flip
-
-            // Use a Coroutine to animate the flip over time
-            StartCoroutine(AnimateFlip(currentScale, targetScale, duration));
-        }
-        private IEnumerator AnimateFlip(Vector3 startScale, Vector3 targetScale, float duration)
-        {
-            float startTime = Time.time;
-            float elapsedTime = 0f;
-
-            while (elapsedTime < duration)
+            if (!facedUp)
             {
-                // Calculate the interpolation factor
-                float t = elapsedTime / duration;
+                for (float i = 0f; i <= 180f; i += 10f)
+                {
+                    transform.rotation = Quaternion.Euler(0f, i, 0f);
+                    if (i == 90f)
+                    {
+                        _cardBack.sprite = _firstMaterial;
+                    }
+                    yield return new WaitForSeconds(0.01f);
+                }
+            }
+            coroutineAllowed = true;
 
-                // Lerp between startScale and targetScale
-                _cardImage. transform.localScale = Vector3.Lerp(startScale, targetScale, t);
+            facedUp = !facedUp;
+        }
+        private IEnumerator FaceDown()
+        {
 
-                elapsedTime = Time.time - startTime;
-
-                yield return null;
+            if (facedUp)
+            {
+                for (float i = 180f; i >= 0f; i -= 10f)
+                {
+                    transform.rotation = Quaternion.Euler(0f, i, 0f);
+                    if (i == 90f)
+                    {
+                        _cardBack.sprite = _secondMaterial;
+                    }
+                    yield return new WaitForSeconds(0.01f);
+                }
             }
 
-            // Ensure the final scale is exactly the target scale
-            _cardImage. transform.localScale = targetScale;
+            coroutineAllowed = true;
+
+            facedUp = !facedUp;
         }
     }
 }

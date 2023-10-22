@@ -22,10 +22,15 @@ namespace MatchGame.View
 
             eventHandlerSystem.AddListener(GameEventKeys.GameStateUpdated, ShowMenu);
             _resume.onClick.AddListener(() => Resume());
+            _quit.onClick.AddListener(() => Quit());
         }
+
+      
 
         private void Resume()
         {
+            ServiceLocator.Instance.Get<AudioDataContainer>().OnButtonClick = SFX.ButtonClick;
+
             _gameDataContainer.GameState = State.Play;
         }
 
@@ -33,6 +38,8 @@ namespace MatchGame.View
 
         private void ShowMenu()
         {
+            ServiceLocator.Instance.Get<AudioDataContainer>().OnButtonClick = SFX.ButtonClick;
+
             if (_gameDataContainer.GameState == State.Pause)
             {
                 EnableScreen();
@@ -44,7 +51,10 @@ namespace MatchGame.View
 
             }
         }
-
+        private void Quit()
+        {
+            _gameDataContainer.GameState = State.LevelSelection;
+        }
         /// <summary>
         /// Enable the screen by making it interactable and visible.
         /// </summary>

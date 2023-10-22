@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using MatchGame.Core;
 using MatchGame.Data;
+using UnityEngine;
 
 namespace MatchGame
 {
@@ -47,7 +49,7 @@ namespace MatchGame
 
         private void UpdateGameState()
         {
-            if(_gameDataContainer.GameState==State.Play)
+            if (_gameDataContainer.GameState == State.Play)
             {
                 _timerSystem.Start();
             }
@@ -68,11 +70,19 @@ namespace MatchGame
         public void UpdateScore()
         {
             _gameDataContainer.Score += 1;
-            if(_gameDataContainer.MaxScore == _gameDataContainer.Score)
+            if (_gameDataContainer.MaxScore == _gameDataContainer.Score)
             {
-                _gameDataContainer.GameState = State.GameOver;
-                _gameDataContainer.UnlockedLevel = _gameDataContainer.CurrentLevel+1;
+                CoreContext.Instance.StartCoroutine(LevelComplete());
+
             }
+        }
+
+        private IEnumerator LevelComplete()
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            _gameDataContainer.GameState = State.GameOver;
+            _gameDataContainer.UnlockedLevel = _gameDataContainer.CurrentLevel + 1;
         }
 
         public void SubtractPoints(int points)

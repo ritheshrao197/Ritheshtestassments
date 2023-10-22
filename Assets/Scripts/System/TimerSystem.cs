@@ -7,7 +7,7 @@ namespace MatchGame
     public class TimerSystem : CoreSystem
     {
         private float startTime =0.0f;
-        private bool isRunning;
+        private bool isRunning =false;
 
         EventHandlerSystem _eventHandlerSystem;
         GameDataContainer _gameDataContainer;
@@ -38,19 +38,25 @@ namespace MatchGame
             {
 
 
-                isRunning = true;
-                _gameDataContainer.CurrentTime = startTime;
+                if (!isRunning)
+                {
+                    isRunning = true;
 
-                CoreContext.Instance.StartCoroutine(Countdown());
+                    CoreContext.Instance.StartCoroutine(Countdown());
+                }
             }
             else if (_gameDataContainer.GameState == State.Pause)
-
             {
                 isRunning = false;
 
             }
+            else if (_gameDataContainer.GameState == State.GameOver || _gameDataContainer.GameState == State.LevelSelection)
+            {
+                _gameDataContainer.CurrentTime = startTime;
 
+            }
 
+            
         }
 
         public void Stop()

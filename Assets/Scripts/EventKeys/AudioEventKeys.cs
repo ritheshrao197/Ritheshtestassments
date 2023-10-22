@@ -3,6 +3,11 @@
     public class AudioEventKeys
     {
         public static int OnButtonClick = KeyGenerator.GetKey();
+        public static int PlayBg = KeyGenerator.GetKey();
+        public static int MusicOff = KeyGenerator.GetKey();
+        public static int MusicOn = KeyGenerator.GetKey();
+        public static int Soundff = KeyGenerator.GetKey();
+        public static int SoundOn = KeyGenerator.GetKey();
     }
     public class GameEventKeys
     {

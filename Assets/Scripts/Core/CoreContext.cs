@@ -19,7 +19,6 @@ namespace MatchGame.Core
             }
         }
         // Reference to various managers, such as input manager, UI manager, etc.
-        AudioSystem _audioSystem;
         ServiceLocator _serviceLocator;
         EventHandlerSystem _eventHandlerSystem;
         //core systems
@@ -34,13 +33,15 @@ namespace MatchGame.Core
         AudioDataContainer _audioDataContainer;
         SettingsDataContainer _settingsDataContainer;
 
-        //public SpriteContainer spriteContainer; // Reference to the ScriptableObject containing sprites.
 
         //views
         [SerializeField] GamePlayView _gamePlayView;
         [SerializeField] MainMenuView _mainMenuView;
         [SerializeField] LevelSelectionView _levelSelectionView;
         [SerializeField] PauseScreenView _pauseScreenView;
+        [SerializeField] LevelComplteScreenView _levelComplteScreenView;
+        [SerializeField] AudioManager _audioManager;
+
 
         [SerializeField] GridLayoutHandler _gridLayoutHandler;
     
@@ -52,11 +53,18 @@ namespace MatchGame.Core
             // Initialize your managers and other components here.
             SystemInitialisation();
             DataContainerRegistration();
-            // Set initial game state
-            //isGamePaused = false;
-            //isGameOver = false;
+           
             CoreSystemInitialisation();
             ViewInitialisation();
+
+            InitialiseAudioSystem();
+        }
+
+        private void InitialiseAudioSystem()
+        {
+            _audioManager.Init();
+            _audioManager.AddListener();
+
         }
 
         private void ViewInitialisation()
@@ -65,6 +73,7 @@ namespace MatchGame.Core
             _mainMenuView.Init();
             _levelSelectionView.Init();
             _pauseScreenView.Init();
+            _levelComplteScreenView.Init();
         }
 
         private void CoreSystemInitialisation()
@@ -100,10 +109,9 @@ namespace MatchGame.Core
         {
             _serviceLocator = new();
             _eventHandlerSystem = new();
-            //_audioSystem = new();
-
-            _serviceLocator.Register(_eventHandlerSystem);
-            _serviceLocator.Register(_audioSystem);
+            _audioDataContainer = new();
+            _settingsDataContainer = new();
+          
 
 
 
@@ -111,6 +119,8 @@ namespace MatchGame.Core
 
         private void DataContainerRegistration()
         {
+            _serviceLocator.Register(_eventHandlerSystem);
+            _serviceLocator.Register(_audioDataContainer);
             _serviceLocator.Register(_gameDataContainer);
             _serviceLocator.Register(_audioDataContainer);
             _serviceLocator.Register(_settingsDataContainer);
