@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace MatchGame
 {
+
     public class SpriteProviderSystem : CoreSystem
     {
 
@@ -45,6 +46,8 @@ namespace MatchGame
             if (!string.IsNullOrEmpty(resourcesPath))
             {
                 _gameDataContainer.Sprites = Resources.Load<SpriteContainer>(resourcesPath).spriteList;
+                //Debug.Log("_gameDataContainer"+ _gameDataContainer.Sprites.Length);
+
             }
             else
             {

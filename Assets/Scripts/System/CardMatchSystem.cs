@@ -38,11 +38,10 @@ namespace MatchGame
                     _gameDataContainer.CardMatched = true;
 
                     firstCard = null;
-                    // Handle matching logic (e.g., increase score, remove matched cards, etc.)
-                }
+                                 }
                 else
                 {
-                 CoreContext.Instance.StartCoroutine(FlipCardsBack(card));
+                    CoreContext.Instance.StartCoroutine(FlipCardsBack(card));
                 }
             }
         }
@@ -57,9 +56,10 @@ namespace MatchGame
             firstCard = null;
 
             yield return new WaitForSeconds(0.01f); // Wait for a moment before flipping back
-            
+
         }
     }
+}
 
     //public class CardMatchSystem : CoreSystem
     //{
@@ -209,4 +209,4 @@ namespace MatchGame
     //    }
     //}
 
-}
+//}

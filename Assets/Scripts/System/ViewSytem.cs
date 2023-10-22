@@ -19,7 +19,10 @@ namespace MatchGame.View
             // Initialize by setting the first screen as active.
             SetActiveScreen(_activeScreenIndex);
         }
-
+        //public override void Init()
+        //{
+        //    base.Init();
+        //}
         public void ShowScreen(int screenIndex)
         {
             if (screenIndex != _activeScreenIndex)

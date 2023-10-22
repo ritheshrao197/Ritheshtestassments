@@ -30,6 +30,7 @@ namespace MatchGame.Core
                 }
             }
         }
+
         public void TriggerEvent(int eventName)
         {
             if (eventDictionary.TryGetValue(eventName, out Action eventAction))
