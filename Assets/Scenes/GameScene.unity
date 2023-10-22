@@ -2028,7 +2028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 831439649408685970, guid: c4abc56e2235f408bb193326942b3186, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 831439649408685970, guid: c4abc56e2235f408bb193326942b3186, type: 3}
       propertyPath: m_AnchorMin.x
@@ -2036,15 +2036,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 831439649408685970, guid: c4abc56e2235f408bb193326942b3186, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 831439649408685970, guid: c4abc56e2235f408bb193326942b3186, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 831439649408685970, guid: c4abc56e2235f408bb193326942b3186, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 831439649408685970, guid: c4abc56e2235f408bb193326942b3186, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2076,11 +2076,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 831439649408685970, guid: c4abc56e2235f408bb193326942b3186, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 307.75497
       objectReference: {fileID: 0}
     - target: {fileID: 831439649408685970, guid: c4abc56e2235f408bb193326942b3186, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 831439649408685970, guid: c4abc56e2235f408bb193326942b3186, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2451,7 +2451,7 @@ MonoBehaviour:
   _sfxLevelComplete: {fileID: 8300000, guid: 43081552f3e88e94380133bfbde96420, type: 3}
   _sfxWrongMatch: {fileID: 8300000, guid: 34dd40481f7a7f0428eb1ce61c3621f7, type: 3}
   _sfx5: {fileID: 8300000, guid: 43e21d43f87cd4848a952c007576a987, type: 3}
-  _bgmusic: {fileID: 8300000, guid: 475f4837af487ce4a9e68bb227455e4c, type: 3}
+  _bgmusic: {fileID: 8300000, guid: 90eae78e8ce85a849b5b0ca11b2de641, type: 3}
 --- !u!4 &1780702339
 Transform:
   m_ObjectHideFlags: 0
