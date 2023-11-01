@@ -51,7 +51,7 @@ namespace MatchGame.View
 
         private void ScoreUpdated()
         {
-             _score.text = "Score :"+_gameDataContainer.Score;
+             _score.text = "Score :"+_gameDataContainer.Score +"/"+ _gameDataContainer.MaxScore;
         }
 
         private void ShowGamePlay()

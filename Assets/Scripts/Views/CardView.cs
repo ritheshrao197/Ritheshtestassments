@@ -31,7 +31,7 @@ namespace MatchGame.View
 
         private GameDataContainer _gameDataContainer;
         private AudioDataContainer _audioDataContainer;
-        private bool coroutineAllowed, facedUp;
+        private bool coroutineAllowed =true, facedUp;
 
 
         public void SetIndex(int index, int id)
@@ -96,16 +96,19 @@ namespace MatchGame.View
         public Card GetIndex() { return cardData; }
         public void ApplyFirstMaterial()
         {
-            if (_gameDataContainer.FlipCards.id == cardData.id &&
-                _gameDataContainer.FlipCards.index == cardData.index)
+            //if (coroutineAllowed)
             {
-                cardData = _gameDataContainer.FlipCards;
+                if (_gameDataContainer.FlipCards.id == cardData.id &&
+                _gameDataContainer.FlipCards.index == cardData.index)
+                {
+                    cardData = _gameDataContainer.FlipCards;
 
-                _cardBack.sprite = _firstMaterial;
+                    _cardBack.sprite = _firstMaterial;
 
-                _cardImage.gameObject.SetActive(false);
-                CoreContext.Instance.StartCoroutine(FaceDown());
+                    _cardImage.gameObject.SetActive(false);
+                    CoreContext.Instance.StartCoroutine(FaceDown());
 
+                }
             }
 
 
@@ -113,10 +116,13 @@ namespace MatchGame.View
 
         public void ApplySecondMaterial()
         {
-            CoreContext.Instance.StartCoroutine(FaceUp());
+            //if (coroutineAllowed)
+            {
+                CoreContext.Instance.StartCoroutine(FaceUp());
 
-            _cardBack.sprite = _secondMaterial;
-            _cardImage.gameObject.SetActive(true);
+                _cardBack.sprite = _secondMaterial;
+                _cardImage.gameObject.SetActive(true);
+            }
 
         }
 
@@ -148,6 +154,8 @@ namespace MatchGame.View
 
             if (!facedUp)
             {
+                facedUp = !facedUp;
+
                 for (float i = 0f; i <= 180f; i += 10f)
                 {
                     transform.rotation = Quaternion.Euler(0f, i, 0f);
@@ -155,18 +163,20 @@ namespace MatchGame.View
                     {
                         _cardBack.sprite = _firstMaterial;
                     }
-                    yield return new WaitForSeconds(0.01f);
+                    yield return new WaitForSeconds(Time.deltaTime);
                 }
             }
             coroutineAllowed = true;
 
-            facedUp = !facedUp;
         }
         private IEnumerator FaceDown()
         {
+            coroutineAllowed = false;
 
             if (facedUp)
             {
+                facedUp = !facedUp;
+
                 for (float i = 180f; i >= 0f; i -= 10f)
                 {
                     transform.rotation = Quaternion.Euler(0f, i, 0f);
@@ -174,13 +184,12 @@ namespace MatchGame.View
                     {
                         _cardBack.sprite = _secondMaterial;
                     }
-                    yield return new WaitForSeconds(0.01f);
+                    yield return new WaitForSeconds(Time.deltaTime);
                 }
             }
 
             coroutineAllowed = true;
 
-            facedUp = !facedUp;
         }
     }
 }
