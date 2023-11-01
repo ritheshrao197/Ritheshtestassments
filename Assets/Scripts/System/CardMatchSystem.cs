@@ -38,7 +38,7 @@ namespace MatchGame
                     _gameDataContainer.CardMatched = true;
 
                     firstCard = null;
-                                 }
+                }
                 else
                 {
                     CoreContext.Instance.StartCoroutine(FlipCardsBack(card));
@@ -48,14 +48,21 @@ namespace MatchGame
 
         private IEnumerator FlipCardsBack(Card card)
         {
-            yield return new WaitForSeconds(0.5f); // Wait for a moment before flipping back
-            firstCard.Flip();
-            card.Flip();
-            _gameDataContainer.FlipCards = firstCard;
-            _gameDataContainer.FlipCards = card;
-            firstCard = null;
+            yield return new WaitForSeconds(0.2f); // Wait for a moment before flipping back
+            try
+            {
+                firstCard.Flip();
+                card.Flip();
+                List<Card> cards = new List<Card>();
+                _gameDataContainer.FlipCards = firstCard;
+                _gameDataContainer.FlipCards = card;
+                firstCard = null;
+            }
+            catch (Exception e)
+            {
 
-            yield return new WaitForSeconds(0.01f); // Wait for a moment before flipping back
+            }
+            yield return new WaitForSeconds(Time.deltaTime); // Wait for a moment before flipping back
 
         }
     }
