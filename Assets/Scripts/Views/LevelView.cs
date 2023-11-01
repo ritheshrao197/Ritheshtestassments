@@ -37,9 +37,9 @@ namespace MatchGame.View
         {
 
             _gameDataContainer.CurrentLevel = _levelNumber;
+            _gameDataContainer.GameState = State.Play;
             _gameDataContainer.Score = 0;
 
-            _gameDataContainer.GameState = State.Play;
 
         }
 

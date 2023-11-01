@@ -31,6 +31,7 @@ namespace MatchGame.View
             ServiceLocator.Instance.Get<AudioDataContainer>().OnButtonClick = SFX.ButtonClick;
 
             _gameDataContainer.CurrentLevel += 1;
+            _gameDataContainer.Score = 0;
             _gameDataContainer.GameState = State.Play;
         }
 

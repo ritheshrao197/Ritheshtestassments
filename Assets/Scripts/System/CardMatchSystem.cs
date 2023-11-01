@@ -35,7 +35,11 @@ namespace MatchGame
                 {
                     firstCard.Match();
                     card.Match();
-                    _gameDataContainer.CardMatched = true;
+                    if (!_gameDataContainer.MatchedCardIndexes.Contains(card.id))
+                    {
+                        _gameDataContainer.MatchedCardIndexes.Add(card.id);
+                        _gameDataContainer.CardMatched = true;
+                    }
 
                     firstCard = null;
                 }
