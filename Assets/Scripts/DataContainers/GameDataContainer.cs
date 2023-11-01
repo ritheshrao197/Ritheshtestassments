@@ -44,7 +44,7 @@ namespace MatchGame.Data
             {
                 _currentLevel = value;
                 ServiceLocator.Instance.Get<EventHandlerSystem>().TriggerEvent(GameEventKeys.CurrentLevelUpdated);
-                MatchedCardIndexes.Clear();
+                _matchedCardIndexes.Clear();
 
 
             }
@@ -174,7 +174,12 @@ namespace MatchGame.Data
             }
             set
             {
+                
                 _score = value;
+                if(value==0)
+                {
+                    _matchedCardIndexes.Clear();
+                }
                 ServiceLocator.Instance.Get<EventHandlerSystem>().TriggerEvent(GameEventKeys.ScoreUpdated);
 
             }

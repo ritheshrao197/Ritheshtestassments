@@ -69,7 +69,7 @@ namespace MatchGame
 
         public void UpdateScore()
         {
-            _gameDataContainer.Score += 1;
+            _gameDataContainer.Score = _gameDataContainer.MatchedCardIndexes.Count;
             if (_gameDataContainer.MaxScore == _gameDataContainer.Score)
             {
                 CoreContext.Instance.StartCoroutine(LevelComplete());
