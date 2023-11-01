@@ -201,6 +201,7 @@ namespace MatchGame.Data
             set
             {
                 _maxScore = value;
+                ServiceLocator.Instance.Get<EventHandlerSystem>().TriggerEvent(GameEventKeys.ScoreUpdated);
 
 
             }
